@@ -40,6 +40,9 @@ class UserInterface {
 // EVENT LISTENERS
 // ===============
 
+// Load books from local storage
+document.addEventListener("DOMContentLoaded", ()=> Storage.displayBooks());
+
 // Add book
 document.querySelector('#input-area [type="submit"]').addEventListener('click', (e)=> {
   const TITLE = document.getElementById('book-title'),
@@ -51,11 +54,13 @@ document.querySelector('#input-area [type="submit"]').addEventListener('click', 
     UI.showError();
     return
   };
-  
+  // create book and update UI
   const BOOK = new Book(TITLE.value, AUTHOR.value, ISBN.value);
   const UI = new UserInterface();
   UI.addBook(BOOK);
   UI.clearInput(TITLE, AUTHOR, ISBN);
+
+  Storage.addBook(BOOK);
 
   e.preventDefault();
 });
@@ -67,4 +72,47 @@ document.getElementById('book-list').addEventListener('click', function(e){
   
   const UI = new UserInterface();
   UI.removeBook(eTarget);
+
+  Storage.removeBook(eTarget.parentElement.previousElementSibling.textContent);
 });
+
+// =============
+// Local storage
+// =============
+
+class Storage {
+  static getBooks() {
+    let books;
+    if(localStorage.getItem('books') === null) {
+      books = [];
+    } else {
+      books = JSON.parse(localStorage.getItem('books'));
+    }
+
+    return books;
+  }
+
+  static displayBooks() {
+    const books = Storage.getBooks();
+    books.forEach((book)=>{
+      const UI = new UserInterface;
+      UI.addBook(book);
+    })
+  }
+
+  static addBook(book) {
+    const books = Storage.getBooks();
+    books.push(book);
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+  
+  static removeBook(isbn) {
+    const books = Storage.getBooks();
+    books.forEach((book, index)=>{
+      if(book.isbn === isbn){
+        books.splice(index, 1);
+      }
+    })
+    localStorage.setItem('books', JSON.stringify(books));    
+  }
+}
