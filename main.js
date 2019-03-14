@@ -4,7 +4,7 @@ const DOM_TITLE = document.getElementById('book-title'),
       DOM_SUBMIT = document.querySelector('#input-area [type="submit"]'), 
       DOM_TABLE_BODY = document.querySelector('#table-area table tbody')
 
-// Submit button event listener
+// Submit Button -- event listener
 DOM_SUBMIT.addEventListener('click', (e)=> {
   if(!DOM_TITLE.checkValidity() || !DOM_AUTHOR.checkValidity() || !DOM_ISBN.checkValidity()) return;
   newBook(); 
