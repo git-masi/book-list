@@ -1,37 +1,47 @@
-const DOM_TITLE = document.getElementById('book-title'),
-      DOM_AUTHOR = document.getElementById('author'),
-      DOM_ISBN = document.getElementById('isbn'),
-      DOM_SUBMIT = document.querySelector('#input-area [type="submit"]'), 
-      DOM_TABLE_BODY = document.querySelector('#table-area table tbody')
+// Book constructor
+function Book(title, author, isbn) {
+  this.title = title;
+  this.author = author;
+  this.isbn = isbn;
+}
+
+// UI constructor
+function Ui() {
+  this.bookList = document.getElementById('book-list');
+}
+
+// Add book to list
+Ui.prototype.addToList = function(book){
+  const ROW = document.createElement('tr');
+  ROW.innerHTML = 
+  `
+  \t<td>${book.title}</td>
+  \t<td>${book.author}</td>
+  \t<td>${book.isbn}</td>
+  \t<td><i class="material-icons sm delete">indeterminate_check_box</i></td>
+  `
+  this.bookList.appendChild(ROW);
+};
+
+// Clear inputs
+Ui.prototype.clearInput = function(title, author, isbn) {
+  title.value = '';
+  author.value = '';
+  isbn.value = '';
+};
 
 // Submit Button -- event listener
-DOM_SUBMIT.addEventListener('click', (e)=> {
-  if(!DOM_TITLE.checkValidity() || !DOM_AUTHOR.checkValidity() || !DOM_ISBN.checkValidity()) return;
-  newBook(); 
+document.querySelector('#input-area [type="submit"]').addEventListener('click', (e)=> {
+  const TITLE = document.getElementById('book-title'),
+        AUTHOR = document.getElementById('author'),
+        ISBN = document.getElementById('isbn');
+  // validate HTML inputs
+  if(!TITLE.checkValidity() || !AUTHOR.checkValidity() || !ISBN.checkValidity()) return;
+  
+  const BOOK = new Book(TITLE.value, AUTHOR.value, ISBN.value);
+  const UI = new Ui();
+  UI.addToList(BOOK);
+  UI.clearInput(TITLE, AUTHOR, ISBN);
+
   e.preventDefault();
 });
-
-// Add new book
-function newBook() {
-  const TABLE_ENTRY = document.createElement('tr'),
-        ENTRY_TITLE = document.createElement('td'),
-        ENTRY_AUTHOR = document.createElement('td'),
-        ENTRY_ISBN = document.createElement('td'),
-        ENTRY_DELETE = document.createElement('td'),
-        DELETE_ICON = document.createElement('i')
-  
-  ENTRY_TITLE.textContent = DOM_TITLE.value;
-  ENTRY_AUTHOR.textContent = DOM_AUTHOR.value;
-  ENTRY_ISBN.textContent = DOM_ISBN.value;
-
-  DELETE_ICON.classList.add('material-icons', 'sm');
-  DELETE_ICON.textContent = 'indeterminate_check_box';
-  ENTRY_DELETE.appendChild(DELETE_ICON);
-
-  TABLE_ENTRY.appendChild(ENTRY_TITLE);
-  TABLE_ENTRY.appendChild(ENTRY_AUTHOR);
-  TABLE_ENTRY.appendChild(ENTRY_ISBN);
-  TABLE_ENTRY.appendChild(ENTRY_DELETE);
-  
-  DOM_TABLE_BODY.appendChild(TABLE_ENTRY);
-}
