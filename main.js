@@ -30,13 +30,23 @@ Ui.prototype.clearInput = function(title, author, isbn) {
   isbn.value = '';
 };
 
+// Show error message
+function showError() {
+  const ERROR = document.getElementById('error');
+  ERROR.classList.remove('hide');
+  setTimeout(()=>ERROR.classList.add('hide'), 4000);
+}
+
 // Submit Button -- event listener
 document.querySelector('#input-area [type="submit"]').addEventListener('click', (e)=> {
   const TITLE = document.getElementById('book-title'),
         AUTHOR = document.getElementById('author'),
         ISBN = document.getElementById('isbn');
   // validate HTML inputs
-  if(!TITLE.checkValidity() || !AUTHOR.checkValidity() || !ISBN.checkValidity()) return;
+  if(!TITLE.checkValidity() || !AUTHOR.checkValidity() || !ISBN.checkValidity()) {
+    showError();
+    return
+  };
   
   const BOOK = new Book(TITLE.value, AUTHOR.value, ISBN.value);
   const UI = new Ui();
