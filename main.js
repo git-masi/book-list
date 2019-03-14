@@ -1,72 +1,70 @@
-// Book constructor
-function Book(title, author, isbn) {
-  this.title = title;
-  this.author = author;
-  this.isbn = isbn;
+class Book {
+  constructor(title, author, isbn) {
+    this.title = title;
+    this.author = author;
+    this.isbn = isbn;
+  }
 }
 
-// UI constructor
-function UserInterface() {}
+class UserInterface {
+  addBook(book) {
+    const ROW = document.createElement('tr');
+    ROW.innerHTML = 
+    `
+    \t<td>${book.title}</td>
+    \t<td>${book.author}</td>
+    \t<td>${book.isbn}</td>
+    \t<td><i class="material-icons sm delete">indeterminate_check_box</i></td>
+    `
+    document.getElementById('book-list').appendChild(ROW);
+  }
 
-// Access book list element
-UserInterface.prototype.bookList = document.getElementById('book-list');
+  showError() {
+    const ERROR = document.getElementById('error');
+    ERROR.classList.remove('hide');
+    setTimeout(()=>ERROR.classList.add('hide'), 3600);
+  }
 
-// Add book to list
-UserInterface.prototype.addToList = function(book){
-  const ROW = document.createElement('tr');
-  ROW.innerHTML = 
-  `
-  \t<td>${book.title}</td>
-  \t<td>${book.author}</td>
-  \t<td>${book.isbn}</td>
-  \t<td><i class="material-icons sm delete">indeterminate_check_box</i></td>
-  `
-  this.bookList.appendChild(ROW);
-};
+  clearInput(title, author, isbn) {
+    title.value = '';
+    author.value = '';
+    isbn.value = '';
+  }
 
-// Clear inputs
-UserInterface.prototype.clearInput = function(title, author, isbn) {
-  title.value = '';
-  author.value = '';
-  isbn.value = '';
-};
-
-// Show error message
-function showError() {
-  const ERROR = document.getElementById('error');
-  ERROR.classList.remove('hide');
-  setTimeout(()=>ERROR.classList.add('hide'), 3600);
+  removeBook(e) {
+    e.parentElement.parentElement.remove();
+  }
 }
 
-// Delete book
-UserInterface.prototype.deleteBook = function(e){
-  e.parentElement.parentElement.remove();
-}
+// ===============
+// EVENT LISTENERS
+// ===============
 
-// Submit button, event listener, add book
+// Add book
 document.querySelector('#input-area [type="submit"]').addEventListener('click', (e)=> {
   const TITLE = document.getElementById('book-title'),
         AUTHOR = document.getElementById('author'),
         ISBN = document.getElementById('isbn');
   // validate HTML inputs
   if(!TITLE.checkValidity() || !AUTHOR.checkValidity() || !ISBN.checkValidity()) {
-    showError();
+    const UI = new UserInterface();
+    UI.showError();
     return
   };
   
   const BOOK = new Book(TITLE.value, AUTHOR.value, ISBN.value);
   const UI = new UserInterface();
-  UI.addToList(BOOK);
+  UI.addBook(BOOK);
   UI.clearInput(TITLE, AUTHOR, ISBN);
 
   e.preventDefault();
 });
 
-// Minus icon, event listener, remove book
+// Remove book
 document.getElementById('book-list').addEventListener('click', function(e){
   let eTarget = e.target.closest('.delete');
   if(!eTarget) return;
   
   const UI = new UserInterface();
-  UI.deleteBook(eTarget);
+  UI.removeBook(eTarget);
 });
