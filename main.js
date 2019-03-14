@@ -6,12 +6,13 @@ function Book(title, author, isbn) {
 }
 
 // UI constructor
-function Ui() {
-  this.bookList = document.getElementById('book-list');
-}
+function UserInterface() {}
+
+// Access book list element
+UserInterface.prototype.bookList = document.getElementById('book-list');
 
 // Add book to list
-Ui.prototype.addToList = function(book){
+UserInterface.prototype.addToList = function(book){
   const ROW = document.createElement('tr');
   ROW.innerHTML = 
   `
@@ -24,7 +25,7 @@ Ui.prototype.addToList = function(book){
 };
 
 // Clear inputs
-Ui.prototype.clearInput = function(title, author, isbn) {
+UserInterface.prototype.clearInput = function(title, author, isbn) {
   title.value = '';
   author.value = '';
   isbn.value = '';
@@ -34,10 +35,15 @@ Ui.prototype.clearInput = function(title, author, isbn) {
 function showError() {
   const ERROR = document.getElementById('error');
   ERROR.classList.remove('hide');
-  setTimeout(()=>ERROR.classList.add('hide'), 4000);
+  setTimeout(()=>ERROR.classList.add('hide'), 3600);
 }
 
-// Submit Button -- event listener
+// Delete book
+UserInterface.prototype.deleteBook = function(e){
+  e.parentElement.parentElement.remove();
+}
+
+// Submit button, event listener, add book
 document.querySelector('#input-area [type="submit"]').addEventListener('click', (e)=> {
   const TITLE = document.getElementById('book-title'),
         AUTHOR = document.getElementById('author'),
@@ -49,9 +55,18 @@ document.querySelector('#input-area [type="submit"]').addEventListener('click', 
   };
   
   const BOOK = new Book(TITLE.value, AUTHOR.value, ISBN.value);
-  const UI = new Ui();
+  const UI = new UserInterface();
   UI.addToList(BOOK);
   UI.clearInput(TITLE, AUTHOR, ISBN);
 
   e.preventDefault();
+});
+
+// Minus icon, event listener, remove book
+document.getElementById('book-list').addEventListener('click', function(e){
+  let eTarget = e.target.closest('.delete');
+  if(!eTarget) return;
+  
+  const UI = new UserInterface();
+  UI.deleteBook(eTarget);
 });
