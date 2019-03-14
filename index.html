@@ -23,25 +23,27 @@
           <h1>Add Book</h1>
         </div>
       </div>
+      <!-- Book info input -->
       <div class="row" id="input-area">
         <div class="col s12">
           <div class="input-field">
-            <input type="text" id="book-title" class="validate" minlength="5">
+            <input type="text" id="book-title" class="validate" pattern="^[\w\s]+$" minlength="4" maxlength="70" required autofocus>
             <label for="book-title">Book Title</label>
           </div>
           <div class="input-field">
-            <input type="text" id="author" class="validate" minlength="5">
+            <input type="text" id="author" class="validate" pattern="^[\w\s]+$" minlength="4" maxlength="70" required>
             <label for="author">Author</label>
           </div>
           <div class="input-field">
-            <input type="text" id="isbn" class="validate" minlength="10">
+            <input type="text" id="isbn" class="validate" pattern="[\d -]+" minlength="9" maxlength="16" required>
             <label for="isbn">ISBN</label>
           </div>
           <button class="btn waves-effect waves-light deep-purple lighten-2" type="submit" name="action">Submit
-              <i class="material-icons right">send</i>
-            </button>
+            <i class="material-icons right">send</i>
+          </button>
         </div>
       </div>
+      <!-- hr -->
       <div class="row">
         <div class="col s12">
           <br>
@@ -49,15 +51,16 @@
           <br>
         </div>
       </div>
-      <div class="row">
+      <!-- Book table -->
+      <div class="row" id="table-area">
         <div class="col s12">
           <table class="highlight">
             <thead>
               <tr>
-                  <th>Book Title</th>
-                  <th>Author</th>
-                  <th>ISBN</th>
-                  <th></th>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th></th>
               </tr>
             </thead>
       
