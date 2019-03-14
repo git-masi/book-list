@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Materialize compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+</head>
+<body class="blue-grey lighten-5">
+  <header>
+    
+  </header>
+  <main>
+    <div class="container white">
+      <div class="row">
+        <div class="col s12">
+          <h1>Add Book</h1>
+        </div>
+      </div>
+      <div class="row" id="input-area">
+        <div class="col s12">
+          <div class="input-field">
+            <input type="text" id="book-title" class="validate" minlength="5">
+            <label for="book-title">Book Title</label>
+          </div>
+          <div class="input-field">
+            <input type="text" id="author" class="validate" minlength="5">
+            <label for="author">Author</label>
+          </div>
+          <div class="input-field">
+            <input type="text" id="isbn" class="validate" minlength="10">
+            <label for="isbn">ISBN</label>
+          </div>
+          <button class="btn waves-effect waves-light deep-purple lighten-2" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+            </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <br>
+          <hr>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <table class="highlight">
+            <thead>
+              <tr>
+                  <th>Book Title</th>
+                  <th>Author</th>
+                  <th>ISBN</th>
+                  <th></th>
+              </tr>
+            </thead>
+      
+            <tbody>
+              <tr>
+                <td>Ender's Game</td>
+                <td>Orson Scott Card</td>
+                <td>0-312-93208-1</td>
+                <td><i class="material-icons sm">indeterminate_check_box</i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+      <br>
+    </div>
+    
+  </main>
+  <!-- Materialize compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Custom JS -->
+  <script src="main.js"></script>
+</body>
+</html>
